@@ -1,0 +1,51 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "975296",
+      "name": "注册",
+      "font_class": "zhuce",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "4766293",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e7ae",
+      "unicode_decimal": 59310
+    },
+    {
+      "icon_id": "7090090",
+      "name": "注册",
+      "font_class": "zhuce1",
+      "unicode": "e71c",
+      "unicode_decimal": 59164
+    },
+    {
+      "icon_id": "10258933",
+      "name": "user",
+      "font_class": "user1",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "34453208",
+      "name": "email",
+      "font_class": "email",
+      "unicode": "e856",
+      "unicode_decimal": 59478
+    },
+    {
+      "icon_id": "36660083",
+      "name": "register",
+      "font_class": "register",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    }
+  ]
+}

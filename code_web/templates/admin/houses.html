@@ -1,0 +1,332 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}房源管理{% endblock %}
+
+{% block content %}
+
+<!-- 房源列表卡片 -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>房源列表</span>
+        <div class="d-flex gap-2">
+            <div class="input-group" style="width: 300px;">
+                <input type="text" class="form-control" id="searchKeyword" placeholder="搜索小区名称...">
+                <button class="btn btn-outline-secondary" type="button" onclick="searchHouses()">搜索</button>
+            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addHouseModal">添加房源</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>小区名称</th>
+                        <th>区域</th>
+                        <th>总价(万)</th>
+                        <th>面积(㎡)</th>
+                        <th>户型</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for house in houses %}
+                    <tr>
+                        <td>{{ house.house_id }}</td>
+                        <td>{{ house.community_name }}</td>
+                        <td>{{ house.district }}</td>
+                        <td>{{ house.total_price }}</td>
+                        <td>{{ house.house_area }}</td>
+                        <td>{{ house.house_type }}</td>
+                        <td>
+                            <!-- <button class="btn btn-sm btn-info me-2" onclick="editHouse('{{ house.house_id }}')">编辑</button> -->
+                            <button class="btn btn-sm btn-danger" onclick="deleteHouse('{{ house.house_id }}')">删除</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 分页控件 -->
+<div class="d-flex justify-content-center mt-3">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if current_page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" onclick="changePage('{{ current_page - 1 }}')" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+            
+            {% for page in range(1, total_pages + 1) %}
+            <li class="page-item {% if page == current_page %}active{% endif %}">
+                <a class="page-link" href="javascript:void(0)" onclick="changePage('{{ page }}')">{{ page }}</a>
+            </li>
+            {% endfor %}
+            
+            {% if current_page < total_pages %}
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" onclick="changePage('{{ current_page + 1 }}')" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<!-- 添加房源模态框 -->
+<div class="modal fade" id="addHouseModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">添加房源</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addHouseForm" class="row">
+                    <!-- 左侧栏 -->
+                    <div class="col-md-6 border-end">
+                        <!-- 基本信息 -->
+                        <div class="mb-4">
+                            <h6 class="border-bottom pb-2">基本信息</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">小区名称 <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="community_name" required placeholder="请输入小区名称">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">区域 <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="district" required placeholder="请输入所在区域">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">子区域</label>
+                                    <input type="text" class="form-control" name="sub_district" placeholder="请输入子区域">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 价格信息 -->
+                        <div class="mb-4">
+                            <h6 class="border-bottom pb-2">价格信息</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">总价(万) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="total_price" required placeholder="请输入总价">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">单价(元/㎡) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="unit_price" required placeholder="请输入单价">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 产权信息 -->
+                        <div>
+                            <h6 class="border-bottom pb-2">产权信息</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">交易权属</label>
+                                    <input type="text" class="form-control" name="trans_owner" placeholder="请输入交易权属">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">房屋用途</label>
+                                    <input type="text" class="form-control" name="house_purpo" placeholder="请输入房屋用途">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">房屋年限</label>
+                                    <input type="text" class="form-control" name="house_age" placeholder="请输入房屋年限">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">产权所属</label>
+                                    <input type="text" class="form-control" name="prope_owner" placeholder="请输入产权所属">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">抵押信息</label>
+                                    <input type="text" class="form-control" name="mortg_info" placeholder="请输入抵押信息">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧栏 -->
+                    <div class="col-md-6">
+                        <!-- 房屋信息 -->
+                        <div class="mb-4">
+                            <h6 class="border-bottom pb-2">房屋信息</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">户型 <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="house_type" required placeholder="请输入户型">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">面积(㎡) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="house_area" required placeholder="请输入面积">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">楼层</label>
+                                    <input type="number" class="form-control" name="house_floor" placeholder="请输入楼层">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">朝向</label>
+                                    <input type="text" class="form-control" name="house_orient" placeholder="请输入朝向">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">房屋结构</label>
+                                    <input type="text" class="form-control" name="house_struc" placeholder="请输入房屋结构">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">装修情况</label>
+                                    <input type="text" class="form-control" name="renov_condi" placeholder="请输入装修情况">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 建筑信息 -->
+                        <div>
+                            <h6 class="border-bottom pb-2">建筑信息</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">建筑类型</label>
+                                    <input type="text" class="form-control" name="const_type" placeholder="请输入建筑类型">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">建筑结构</label>
+                                    <input type="text" class="form-control" name="const_struc" placeholder="请输入建筑结构">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">梯户比例</label>
+                                    <input type="text" class="form-control" name="lift_rate" placeholder="请输入梯户比例">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">供暖方式</label>
+                                    <input type="text" class="form-control" name="heat_method" placeholder="请输入供暖方式">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">配备电梯</label>
+                                    <select class="form-select" name="have_lift">
+                                        <option value="true">是</option>
+                                        <option value="false">否</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitAddHouse()">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 文件上传处理
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const statusDiv = document.getElementById('uploadStatus');
+    
+    // 显示上传中状态
+    statusDiv.className = 'alert alert-info';
+    statusDiv.style.display = 'block';
+    statusDiv.textContent = '正在上传并处理数据...';
+    
+    fetch('/admin/houses', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            statusDiv.className = 'alert alert-danger';
+            statusDiv.textContent = data.error;
+        } else {
+            statusDiv.className = 'alert alert-success';
+            statusDiv.textContent = data.message;
+            // 刷新页面显示更新后的数据
+            setTimeout(() => window.location.reload(), 2000);
+        }
+    })
+    .catch(error => {
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = '上传失败：' + error.message;
+    });
+});
+
+async function deleteHouse(houseId) {
+    if (confirm('确定要删除该房源吗？')) {
+        try {
+            const response = await fetch(`/admin/houses/${houseId}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                const data = await response.json();
+                alert(data.error || '删除失败');
+            }
+        } catch (error) {
+            alert('操作失败，请稍后重试');
+        }
+    }
+}
+
+async function submitAddHouse() {
+    const form = document.getElementById('addHouseForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const response = await fetch('/admin/houses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            const responseData = await response.json();
+            alert(responseData.error || '添加失败');
+        }
+    } catch (error) {
+        alert('操作失败，请稍后重试');
+    }
+}
+
+function editHouse(houseId) {
+    window.location.href = `/admin/houses/${houseId}/edit`;
+}
+
+function searchHouses() {
+    const keyword = document.getElementById('searchKeyword').value;
+    changePage(1, keyword);
+}
+
+function changePage(page, keyword = null) {
+    if (keyword === null) {
+        keyword = document.getElementById('searchKeyword').value;
+    }
+    
+    let url = `/admin/houses?page=${page}`;
+    if (keyword) {
+        url += `&keyword=${encodeURIComponent(keyword)}`;
+    }
+    
+    window.location.href = url;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block title %}
+登录
+{% endblock %}
+
+{% block head %}
+<script src="../static/js/login.js"></script>
+<link rel="stylesheet" href="../static/css/log_reg.css">
+{% endblock %}
+
+{% block md_container %}
+<form class="userform">
+    <div class="mb-3">
+        <label for="username" class="form-label">用户名</label>
+        <input type="text" class="form-control" id="username" name="username" autocomplete="username"
+            aria-describedby="userHelp" required>
+        <!-- <div id="userHelp" class="form-text"></div> -->
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">密码</label>
+        <input type="password" class="form-control" id="password" autocomplete="current-password" required>
+    </div>
+    <button type="button" class="btn btn-primary w-100" onclick="submitData()">登录</button>
+</form>
+
+<div class="alert d-none" id="response" role="alert"></div>
+{% endblock %}

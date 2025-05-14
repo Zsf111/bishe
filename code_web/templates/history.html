@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+
+{% block title %}
+浏览历史
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/css/history.css">
+<script src="../static/js/history.js" defer></script>
+{% endblock %}
+
+{% block md_container %}
+<div class="history-container">
+    <!-- 浏览历史列表 -->
+    <div class="history-list">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0">浏览历史</h4>
+            <span class="text-muted">共{{ user.viewed_houses|length }}套房源</span>
+        </div>
+        {% if user.viewed_houses %}
+        <div class="history-houses">
+            {% for house in user.viewed_houses %}
+            <div class="history-item card mb-3" onclick="location.href='/house/{{ house.house_id }}'">
+                <div class="card-body py-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ house.community_name }}</h5>
+                        <button type="button" class="btn-close" 
+                            onclick="removeHistory(event, '{{ house.house_id }}')" 
+                            aria-label="移除记录"></button>
+                    </div>
+                    <div class="house-info">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="location"><i class="iconfont icon-location"></i>{{ house.district }} {{ house.sub_district }}</span>
+                            <span class="price">¥{{ house.total_price }}万</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="house-attrs">
+                                <span class="attr-item"><i class="iconfont icon-house"></i>{{ house.house_type or '暂无数据' }}</span>
+                                <span class="attr-item ms-3"><i class="iconfont icon-area"></i>{{ house.house_area or '暂无数据' }}㎡</span>
+                            </div>
+                            <span class="unit-price text-muted">{{ house.unit_price }}元/㎡</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="list-placeholder">
+            <p class="text-muted">暂无浏览记录</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

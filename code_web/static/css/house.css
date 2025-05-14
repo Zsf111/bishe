@@ -1,0 +1,123 @@
+/* 房屋详情容器 */
+.house-container {
+    padding: 20px 0;
+}
+
+/* 详情卡片 */
+.house-detail {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.house-detail .card-header {
+    background-color: #fff;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* 详情部分 */
+.detail-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* 标题样式 */
+.section-title {
+    color: #333;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* 信息标签 */
+.info-label {
+    color: #666;
+    font-weight: 500;
+    margin-right: 10px;
+    display: inline-block;
+    min-width: 80px;
+}
+
+/* 价格样式 */
+.price {
+    color: #f56c6c;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* 图标样式 */
+.info-label i {
+    margin-right: 5px;
+    font-size: 16px;
+    color: #909399;
+}
+
+/* 面包屑导航样式 */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.breadcrumb-item a {
+    color: #666;
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: #333;
+}
+
+/* 操作按钮组样式 */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.action-buttons .btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+}
+
+.action-buttons .btn i {
+    font-size: 16px;
+}
+
+/* 收藏按钮激活状态 */
+.btn-outline-primary.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .house-container {
+        padding: 10px;
+    }
+    
+    .info-label {
+        min-width: 70px;
+    }
+    
+    .detail-section {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+    
+    .action-buttons {
+        flex-wrap: wrap;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

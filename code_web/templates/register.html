@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+{% block title %}
+注册
+{% endblock %}
+
+{% block head %}
+<script src="../static/js/register.js"></script>
+<link rel="stylesheet" href="../static/css/log_reg.css">
+{% endblock %}
+
+{% block md_container %}
+<!-- <form id="registerForm">
+    <div>
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username" autocomplete="username" required>
+    </div>
+    <div style="margin-top: 10px;">
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+    </div>
+    <div style="margin-top: 10px;">
+        <label for="email">邮箱:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div style="margin-top: 10px;">
+        <button type="button" onclick="submitData()">注册</button>
+    </div>
+</form> -->
+
+<form class="userform">
+    <div class="mb-3">
+        <label for="username" class="form-label">用户名</label>
+        <input type="text" class="form-control" id="username" name="username" autocomplete="username"
+            aria-describedby="userHelp" required>
+        <!-- <div id="userHelp" class="form-text"></div> -->
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">密码</label>
+        <input type="password" class="form-control" id="password" autocomplete="current-password" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">邮箱</label>
+        <input type="email" class="form-control" id="email" autocomplete="email" required>
+    </div>
+    <button type="button" class="btn btn-primary w-100" onclick="submitData()">注册</button>
+</form>
+
+<div class="alert d-none" id="response" role="alert">
+</div>
+{% endblock %}

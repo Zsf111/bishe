@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}后台管理{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/icons/iconfont/iconfont.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="/static/js/bootstrap.bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body style="min-height: 100vh; position: relative; padding-bottom: 60px;">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a href="/admin/dashboard" class="navbar-brand">
+                <img src="/static/imgs/logo.png" alt="" width="40px" style="margin: 0 10px 0;">
+                后台管理
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/admin/dashboard' %}active{% endif %}" {% if session.get('admin_id') %}href="/admin/dashboard"{% else %}href="javascript:void(0)" onclick="alert('请先登录')"{% endif %}>仪表板</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/admin/users' %}active{% endif %}" {% if session.get('admin_id') %}href="/admin/users"{% else %}href="javascript:void(0)" onclick="alert('请先登录')"{% endif %}>用户管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/admin/houses' %}active{% endif %}" {% if session.get('admin_id') %}href="/admin/houses"{% else %}href="javascript:void(0)" onclick="alert('请先登录')"{% endif %}>房源管理</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if session.get('admin_id') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/auth/logout">退出登录</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

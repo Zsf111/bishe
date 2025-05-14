@@ -1,0 +1,125 @@
+{% extends 'index.html' %}
+
+{% block title %}
+可视化图表
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/css/graph.css">
+<script src="../static/js/graph.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+{% endblock %}
+
+{% block md_container %}
+<!-- 添加数据传递元素 -->
+<div id="chart-data" 
+    data-area='{{ area_chart | safe }}'
+    data-district='{{ district_chart | safe }}'
+    data-orient='{{ orient_chart | safe }}'
+    data-floor='{{ floor_chart | safe }}'
+    data-type='{{ type_chart | safe }}'
+    data-owner='{{ owner_chart | safe }}'
+    data-lift='{{ lift_chart | safe }}'
+    style="display: none;">
+</div>
+
+<div class="graph-container">
+    <div class="graph-header">
+        <h2>沈阳二手房数据可视化</h2>
+        <p class="text-muted">直观展示沈阳二手房市场的各项数据分布</p>
+    </div>
+
+    <!-- 第一行三个图表 -->
+    <div class="row g-4 mb-4">
+        <!-- 面积分布 -->
+        <div class="col-md-4">
+            <div class="graph-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">总价和面积的关系</h5>
+                </div>
+                <div class="card-body">
+                    <div id="area-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 区域分布 -->
+        <div class="col-md-4">
+            <div class="graph-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">总价和区域的关系</h5>
+                </div>
+                <div class="card-body">
+                    <div id="district-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 朝向分布 -->
+        <div class="col-md-4">
+            <div class="graph-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">总价和房屋朝向的关系</h5>
+                </div>
+                <div class="card-body">
+                    <div id="orient-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第二行三个图表 -->
+    <div class="row g-4 mb-4">
+        <!-- 楼层分布 -->
+        <div class="col-md-4">
+            <div class="graph-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">总价和楼层的关系</h5>
+                </div>
+                <div class="card-body">
+                    <div id="floor-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 户型分布 -->
+        <div class="col-md-4">
+            <div class="graph-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">总价和房屋户型的关系</h5>
+                </div>
+                <div class="card-body">
+                    <div id="type-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 产权所属分布 -->
+        <div class="col-md-4">
+            <div class="graph-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">总价和产权所属的关系</h5>
+                </div>
+                <div class="card-body">
+                    <div id="owner-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三行一个图表 -->
+    <div class="row g-4">
+        <!-- 电梯配备分布 -->
+        <div class="col-md-4 mx-auto">
+            <div class="graph-card card">
+                <div class="card-header">
+                    <h5 class="mb-0">总价和配备电梯的关系</h5>
+                </div>
+                <div class="card-body">
+                    <div id="lift-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

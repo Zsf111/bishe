@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+
+{% block title %}
+个性化推荐
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/css/recommend.css">
+{% endblock %}
+
+{% block md_container %}
+<div class="recommend-container">
+    <div class="recommend-header">
+        <h2>个性化房源推荐</h2>
+        {% if message %}
+        <p class="text-muted">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    {% if error %}
+    <div class="alert alert-warning" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {% if houses %}
+    <div class="house-grid">
+        {% for house in houses %}
+        <!-- 添加调试信息 -->
+        <!-- <div style="display:none">Debug: House ID = {{ house.house_id }}</div> -->
+        <div class="house-card card" onclick="location.href='/house/{{ house.house_id }}'">
+            <div class="card-body">
+                <h5 class="card-title">{{ house.community_name }}</h5>
+                <div class="house-info">
+                    <p><i class="iconfont icon-location"></i> {{ house.district }} {{ house.sub_district }}</p>
+                    <p><i class="iconfont icon-house"></i> {{ house.house_type or '暂无数据' }}</p>
+                    <p><i class="iconfont icon-area"></i> {{ house.house_area or '暂无数据' }}㎡</p>
+                    <p class="price">¥{{ house.total_price }}万</p>
+                    <p class="unit-price">{{ house.unit_price }}元/平方米</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

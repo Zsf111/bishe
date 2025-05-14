@@ -1,0 +1,67 @@
+.recommend-container {
+    padding: 20px 0;
+}
+
+.recommend-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.recommend-header h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.house-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.house-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.house-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.house-card .card-title {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.house-info p {
+    margin-bottom: 8px;
+    color: #666;
+}
+
+.house-info i {
+    margin-right: 8px;
+    color: #909399;
+}
+
+.house-info .price {
+    color: #f56c6c;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+.house-info .unit-price {
+    color: #909399;
+    font-size: 0.9rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .house-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+}

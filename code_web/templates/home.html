@@ -1,0 +1,119 @@
+{% extends 'index.html' %}
+
+{% block title %}
+沈阳二手房推荐网
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/css/home.css">
+{% endblock %}
+
+{% block md_container %}
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="../static/imgs/shenyang_03.jpg" class="d-block w-100" alt="沈阳城市风光">
+        </div>
+        <div class="carousel-item">
+            <img src="../static/imgs/shenyang_04.jpg" class="d-block w-100" alt="沈阳城市风光">
+        </div>
+        <div class="carousel-item">
+            <img src="../static/imgs/shenyang_05.jpg" class="d-block w-100" alt="沈阳城市风光">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div class="website-intro mt-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">置业沈阳，乐享安家</h2>
+        <p class="text-muted">欢迎光临沈阳二手房信息平台</p>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="iconfont icon-location"></i> 城市魅力</h5>
+                    <p class="card-text">沈阳，这座被誉为"一朝发祥地，两代帝王都"的历史名城，不仅拥有深厚的文化底蕴，更是东北地区的经济、文化、商贸和科技中心。如今的沈阳，正以其独特的魅力吸引着越来越多的置业者。</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="iconfont icon-service"></i> 平台服务</h5>
+                    <p class="card-text">本平台致力于为您提供全面、及时的沈阳二手房信息。我们汇集了沈阳各区域的优质房源，无论您是钟情于繁华的市中心，我们都能满足您的置业愿望。</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="iconfont icon-search"></i> 便捷搜索</h5>
+                    <p class="card-text">在这里，您可以轻松浏览各类房源信息，包括房屋面积、户型、价格、地理位置等，还能通过关键词搜索或多条件筛选，快速锁定目标房源。</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="iconfont icon-recommend"></i> 智能推荐</h5>
+                    <p class="card-text">我们支持用户收藏感兴趣的房源，并根据您的收藏，利用机器学习等推荐算法，为您推荐更合适的房源，让您找房更高效、更满意。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hot-houses">
+        <h3 class="mb-4">房源展示</h3>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>小区名称</th>
+                        <th>区域</th>
+                        <th>总价(万)</th>
+                        <th>单价(元/㎡)</th>
+                        <th>户型</th>
+                        <th>面积(㎡)</th>
+                        <th>朝向</th>
+                        <th>装修</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for house in houses %}
+                    <tr style="cursor: pointer;" onclick="window.location.href='/house/{{ house.house_id }}'">
+                        <td>{{ house.community_name }}</td>
+                        <td>{{ house.district }}</td>
+                        <td class="text-danger">{{ "%.1f" | format(house.total_price) }}</td>
+                        <td>{{ house.unit_price | int }}</td>
+                        <td>{{ house.house_type }}</td>
+                        <td>{{ "%.2f" | format(house.house_area) }}</td>
+                        <td>{{ house.house_orient }}</td>
+                        <td>{{ house.renov_condi }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

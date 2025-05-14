@@ -1,0 +1,99 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}管理员仪表板{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">欢迎回来，{{ current_admin.username }}</h5>
+                <p class="card-text text-muted">上次登录时间：{{ current_admin.last_login.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">用户总数</h5>
+                <h2 class="card-text">{{ user_count }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">房源总数</h5>
+                <h2 class="card-text">{{ house_count }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">今日访问量</h5>
+                <h2 class="card-text">{{ daily_visits }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                最新用户
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>注册时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in latest_users %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.register_time }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                最新房源
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>小区名称</th>
+                                <th>总价(万)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for house in latest_houses %}
+                            <tr>
+                                <td>{{ house.community_name }}</td>
+                                <td>{{ house.total_price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

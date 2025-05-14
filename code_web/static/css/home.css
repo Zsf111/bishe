@@ -1,0 +1,98 @@
+.carousel-inner {
+    width: 100%;
+    height: 460px; /* 设置固定高度 */
+    overflow: hidden;
+}
+
+.carousel-item {
+    height: 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 保持图片比例并填充容器 */
+    object-position: center; /* 图片居中显示 */
+}
+
+/* 网站简介样式 */
+.website-intro {
+    padding: 20px 0;
+}
+
+.website-intro .card {
+    transition: transform 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.website-intro .card:hover {
+    transform: translateY(-5px);
+}
+
+.website-intro .card-title {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.website-intro .card-title i {
+    margin-right: 8px;
+    color: #007bff;
+}
+
+.website-intro .card-text {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* 热门房源表格样式 */
+.hot-houses {
+    margin-top: 40px;
+}
+
+.hot-houses h3 {
+    color: #333;
+    position: relative;
+    padding-left: 15px;
+}
+
+.hot-houses h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background-color: #007bff;
+}
+
+.table {
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+    font-weight: 500;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.table td {
+    color: #666;
+}
+
+.text-danger {
+    font-weight: 500;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .carousel-inner {
+        height: 300px;
+    }
+    
+    .website-intro {
+        padding: 10px;
+    }
+}

@@ -1,0 +1,124 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}用户管理{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>用户列表</span>
+        <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">添加用户</button> -->
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用户名</th>
+                        <th>邮箱</th>
+                        <th>注册时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.user_id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.register_time }}</td>
+                        <td>
+                            <!-- <button class="btn btn-sm btn-info me-2" onclick="editUser('{{ user.user_id }}')">编辑</button> -->
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser('{{ user.user_id }}')">删除</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 添加用户模态框 -->
+<div class="modal fade" id="addUserModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加用户</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="mb-3">
+                        <label class="form-label">用户名</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">邮箱</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">密码</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitAddUser()">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function deleteUser(userId) {
+    if (confirm('确定要删除该用户吗？')) {
+        try {
+            const response = await fetch(`/admin/users/${userId}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                const data = await response.json();
+                alert(data.error || '删除失败');
+            }
+        } catch (error) {
+            alert('操作失败，请稍后重试');
+        }
+    }
+}
+
+async function submitAddUser() {
+    const form = document.getElementById('addUserForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const response = await fetch('/admin/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            const responseData = await response.json();
+            alert(responseData.error || '添加失败');
+        }
+    } catch (error) {
+        alert('操作失败，请稍后重试');
+    }
+}
+
+function editUser(userId) {
+    window.location.href = `/admin/users/${userId}/edit`;
+}
+</script>
+{% endblock %}

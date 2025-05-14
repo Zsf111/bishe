@@ -1,0 +1,17 @@
+/* 登录部分CSS */
+.userform {
+    width: 35%; 
+    margin: 140px auto; 
+    border: 2px solid #222222;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.form-label {
+    font-size: 17px;
+}
+
+.alert {
+    width: 35%;
+    margin: -10% auto;
+}

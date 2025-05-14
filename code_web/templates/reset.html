@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% block title %}
+修改密码
+{% endblock %}
+
+{% block head %}
+<script src="../static/js/reset.js"></script>
+<link rel="stylesheet" href="../static/css/log_reg.css">
+{% endblock %}
+
+{% block md_container %}
+<form class="userform">
+    <div class="mb-3">
+        <label class="form-label">当前用户：{{ user.username }}</label>
+    </div>
+    <div class="mb-3">
+        <label for="old_password" class="form-label">原密码</label>
+        <input type="password" class="form-control" id="old_password" name="old_password" 
+            autocomplete="current-password" required>
+    </div>
+    <div class="mb-3">
+        <label for="new_password" class="form-label">新密码</label>
+        <input type="password" class="form-control" id="new_password" name="new_password" 
+            autocomplete="new-password" required>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <button type="button" class="btn btn-primary" onclick="submitData()">确认修改</button>
+        <a href="/" class="btn btn-link">返回首页</a>
+    </div>
+</form>
+
+<div class="alert d-none" id="response" role="alert">
+</div>
+{% endblock %}

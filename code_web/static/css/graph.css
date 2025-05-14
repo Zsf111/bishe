@@ -1,0 +1,52 @@
+.graph-container {
+    padding: 20px 0;
+}
+
+.graph-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.graph-header h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.graph-card {
+    height: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* 取消了card的悬浮效果，浮动效果对可视化图表交互有点干扰 */
+/* .graph-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+} */
+
+.graph-card .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    padding: 0.75rem 1rem;
+}
+
+.graph-card .card-header h5 {
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.chart-container {
+    height: 300px;
+    width: 100%;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+    }
+    
+    .graph-container {
+        padding: 10px;
+    }
+}

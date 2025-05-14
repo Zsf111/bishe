@@ -1,0 +1,129 @@
+{% extends 'index.html' %}
+
+{% block title %}
+房屋数据
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/css/house_list.css">
+<!-- <script src="../static/js/house_list.js"></script> -->
+<script src="../static/js/house_list.js" defer></script>
+{% endblock %}
+
+{% block md_container %}
+<div class="list-container">
+    <!-- 搜索框部分 -->
+    <div class="search-section card mb-4">
+        <div class="card-body">
+            <form id="searchForm" class="d-flex align-items-center" onsubmit="return handleSearch(event)">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchInput" name="keyword" 
+                        placeholder="搜索小区名称..." value="{{ request.args.get('keyword', '') }}">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="iconfont icon-search"></i> 搜索
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 筛选部分 -->
+    <div class="filter-section card">
+        <div class="card-body">
+            <form id="filterForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="min_total_price" class="form-label">总价范围（万元）</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="min_total_price" name="min_total_price" 
+                            placeholder="最低价格" step="1" min="0">
+                        <span class="input-group-text">-</span>
+                        <input type="number" class="form-control" id="max_total_price" name="max_total_price" 
+                            placeholder="最高价格" step="1" min="0">
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="min_area" class="form-label">面积范围（平方米）</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="min_area" name="min_area" 
+                            placeholder="最小面积" step="1" min="0">
+                        <span class="input-group-text">-</span>
+                        <input type="number" class="form-control" id="max_area" name="max_area" 
+                            placeholder="最大面积" step="1" min="0">
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="district" class="form-label">区域</label>
+                    <select id="district" name="district" class="form-select">
+                        <option value="">全部</option>
+                        {% for district in districts %}
+                        <option value="{{ district }}">{{ district }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="house_type" class="form-label">户型</label>
+                    <select id="house_type" name="house_type" class="form-select">
+                        <option value="">全部</option>
+                        {% for type in house_types %}
+                        <option value="{{ type }}">{{ type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">筛选</button>
+                    <button type="reset" class="btn btn-outline-secondary" onclick="resetForm()">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 房屋列表 -->
+    <div class="house-list">
+        {% if houses %}
+            {% for house in houses %}
+            <div class="house-card card" onclick="location.href='/house/{{ house.house_id }}'">
+                <div class="card-body">
+                    <h5 class="card-title">{{ house.community_name }}</h5>
+                    <div class="card-text">
+                        <p><i class="iconfont icon-location"></i> {{ house.district }} {{ house.sub_district or '' }}</p>
+                        <p><i class="iconfont icon-house"></i> {{ house.house_type or '暂无数据' }}</p>
+                        <p><i class="iconfont icon-area"></i> {{ house.house_area or '暂无数据' }}平方米</p>
+                        <p class="price">¥{{ house.total_price }}万</p>
+                        <p class="unit-price">{{ house.unit_price }}元/平方米</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-data">
+                <p class="text-muted">暂无符合条件的房源</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- 分页 -->
+    {% if total_pages > 0 %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                <a class="page-link" href="javascript:void(0)" onclick="changePage('{{ current_page - 1 }}')" 
+                    {% if current_page == 1 %}tabindex="-1" aria-disabled="true"{% endif %}>上一页</a>
+            </li>
+            
+            <li class="page-item disabled">
+                <span class="page-link">第 {{ current_page }}/{{ total_pages }} 页</span>
+            </li>
+            
+            <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+                <a class="page-link" href="javascript:void(0)" onclick="changePage('{{ current_page + 1 }}')"
+                    {% if current_page == total_pages %}tabindex="-1" aria-disabled="true"{% endif %}>下一页</a>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

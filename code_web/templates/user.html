@@ -1,0 +1,82 @@
+{% extends 'index.html' %}
+
+{% block title %}
+{{ user.username }}的页面
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/css/user.css">
+<script src="../static/js/user.js" defer></script>
+{% endblock %}
+
+{% block md_container %}
+<div class="user-container">
+    <!-- 左侧收藏列表区域 -->
+    <div class="favorite-list">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="mb-0">我的收藏</h4>
+            <span class="text-muted">共{{ user.favorite_houses|length }}套房源</span>
+        </div>
+        {% if user.favorite_houses %}
+        <div class="favorite-houses">
+            {% for house in user.favorite_houses %}
+            <div class="favorite-item card mb-3" onclick="location.href='/house/{{ house.house_id }}'">
+                <div class="card-body py-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ house.community_name }}</h5>
+                        <button type="button" class="btn-close" 
+                            onclick="removeFavorite(event, '{{ house.house_id }}')" 
+                            aria-label="移除收藏"></button>
+                    </div>
+                    <div class="house-info">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="location"><i class="iconfont icon-location"></i>{{ house.district }} {{ house.sub_district }}</span>
+                            <span class="price">¥{{ house.total_price }}万</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="house-attrs">
+                                <span class="attr-item"><i class="iconfont icon-house"></i>{{ house.house_type or '暂无数据' }}</span>
+                                <span class="attr-item ms-3"><i class="iconfont icon-area"></i>{{ house.house_area or '暂无数据' }}㎡</span>
+                            </div>
+                            <span class="unit-price text-muted">{{ house.unit_price }}元/㎡</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="list-placeholder">
+            <p class="text-muted">暂无收藏的房屋</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- 右侧用户信息卡片 -->
+    <div class="user-card">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">个人信息</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <span class="info-label">用户名：</span>
+                    <span class="info-content">{{ user.username }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="info-label">邮箱：</span>
+                    <span class="info-content">{{ user.email }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="info-label">注册时间：</span>
+                    <span class="info-content">{{ user.register_time.strftime('%Y-%m-%d') }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="info-label">个人简介：</span>
+                    <p class="info-content mb-0">{{ user.profile or '这个人很懒，什么都没写~' }}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

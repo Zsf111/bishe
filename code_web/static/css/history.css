@@ -1,0 +1,124 @@
+/* 历史记录容器 */
+.history-container {
+    padding: 20px 0;
+}
+
+/* 历史记录列表 */
+.history-list {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 历史记录滚动区域 */
+.history-houses {
+    height: calc(100vh - 250px);
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* 自定义滚动条样式 */
+.history-houses::-webkit-scrollbar {
+    width: 6px;
+}
+
+.history-houses::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.history-houses::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.history-houses::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 历史记录卡片样式 */
+.history-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.history-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.history-item .card-title {
+    font-size: 1rem;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 85%;
+}
+
+.history-item .house-info {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.history-item .location {
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60%;
+}
+
+.history-item .price {
+    color: #f56c6c;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.history-item .unit-price {
+    font-size: 0.85rem;
+}
+
+.history-item .house-attrs {
+    display: flex;
+    align-items: center;
+}
+
+.history-item .attr-item {
+    color: #666;
+}
+
+.history-item .house-info i {
+    margin-right: 4px;
+    color: #909399;
+    font-size: 0.9rem;
+}
+
+/* 移除按钮样式 */
+.history-item .btn-close {
+    padding: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    transform: scale(0.8);
+}
+
+.history-item:hover .btn-close {
+    opacity: 0.5;
+}
+
+.history-item .btn-close:hover {
+    opacity: 1;
+}
+
+/* 列表占位样式 */
+.list-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}

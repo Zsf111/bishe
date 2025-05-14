@@ -1,0 +1,118 @@
+{% extends 'index.html' %}
+
+{% block title %}
+{{ house.community_name }} - 房屋详情
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/css/house.css">
+<script src="../static/js/house.js" defer></script>
+{% endblock %}
+
+{% block md_container %}
+<div class="house-container">
+    <!-- 操作按钮组 -->
+    <div class="action-buttons mb-4">
+        <button class="btn btn-outline-secondary" onclick="window.history.back()">
+            返回
+        </button>
+        {% if session.get('user_id') %}
+        <button class="btn btn-outline-primary ms-2 {% if house in user.favorite_houses %}active{% endif %}" 
+            onclick="houseFavorite()">
+            <span id="favoriteText">{{ '已收藏' if house in user.favorite_houses else '收藏' }}</span>
+        </button>
+        {% endif %}
+    </div>
+
+    <div class="house-detail card">
+        <!-- 房屋标题 -->
+        <div class="card-header">
+            <h4 class="mb-0">{{ house.community_name }}</h4>
+        </div>
+
+        <div class="card-body">
+            <!-- 基本信息 -->
+            <div class="detail-section">
+                <h5 class="section-title">基本信息</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><span class="info-label"><i class="iconfont icon-price"></i> 总价：</span>
+                            <span class="price">¥{{ house.total_price }}万</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-unit"></i> 单价：</span>
+                            <span>{{ house.unit_price }}元/平方米</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-area"></i> 面积：</span>
+                            <span>{{ house.house_area }}平方米</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-house"></i> 户型：</span>
+                            <span>{{ house.house_type or '暂无数据' }}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><span class="info-label"><i class="iconfont icon-floor"></i> 楼层：</span>
+                            <span>{{ house.house_floor or '暂无数据' }}层</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-direction"></i> 朝向：</span>
+                            <span>{{ house.house_orient or '暂无数据' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-structure"></i> 房屋结构：</span>
+                            <span>{{ house.house_struc or '暂无数据' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-decoration"></i> 装修：</span>
+                            <span>{{ house.renov_condi or '暂无数据' }}</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 建筑信息 -->
+            <div class="detail-section">
+                <h5 class="section-title">建筑信息</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><span class="info-label"><i class="iconfont icon-building"></i> 建筑类型：</span>
+                            <span>{{ house.const_type or '暂无数据' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-structure"></i> 建筑结构：</span>
+                            <span>{{ house.const_struc or '暂无数据' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-age"></i> 房龄：</span>
+                            <span>{{ house.house_age or '暂无数据' }}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><span class="info-label"><i class="iconfont icon-elevator"></i> 电梯配备：</span>
+                            <span>{{ '有' if house.have_lift else '无' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-rate"></i> 梯户比例：</span>
+                            <span>{{ house.lift_rate or '暂无数据' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-heat"></i> 供暖方式：</span>
+                            <span>{{ house.heat_method or '暂无数据' }}</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 权属信息 -->
+            <div class="detail-section">
+                <h5 class="section-title">权属信息</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><span class="info-label"><i class="iconfont icon-property"></i> 产权所属：</span>
+                            <span>{{ house.prope_owner or '暂无数据' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-purpose"></i> 房屋用途：</span>
+                            <span>{{ house.house_purpo or '暂无数据' }}</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><span class="info-label"><i class="iconfont icon-transfer"></i> 交易权属：</span>
+                            <span>{{ house.trans_owner or '暂无数据' }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-mortgage"></i> 抵押信息：</span>
+                            <span>{{ house.mortg_info or '暂无数据' }}</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 位置信息 -->
+            <div class="detail-section">
+                <h5 class="section-title">位置信息</h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p><span class="info-label"><i class="iconfont icon-location"></i> 所在区域：</span>
+                            <span>{{ house.district }} {{ house.sub_district }}</span></p>
+                        <p><span class="info-label"><i class="iconfont icon-community"></i> 小区名称：</span>
+                            <span>{{ house.community_name }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
